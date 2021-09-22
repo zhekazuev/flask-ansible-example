@@ -75,12 +75,9 @@
   become: yes
   become_method: sudo
   tasks:
-  - name: Add the Certbot Ubuntu repository
-    ansible.builtin.apt_repository:
-      repo: ppa:certbot/certbot
   - name: Install the package "python-certbot-nginx"
     apt:
-      name: python-certbot-nginx
+      name: python3-certbot-nginx
   - name: Run command - certbot --nginx -d flaskans.com -d www.flaskans.com
     command: certbot --nginx -d flaskans.com -d www.flaskans.com --non-interactive --agree-tos -m flaskans@example.com
   - name: Run command - ufw delete allow 'Nginx HTTP'
