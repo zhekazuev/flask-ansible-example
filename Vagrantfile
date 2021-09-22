@@ -17,9 +17,11 @@ Vagrant.configure("2") do |config|
     subconfig.vm.box_version = BOX_VERSION
     subconfig.vm.hostname = "master.localhost"
     subconfig.vm.network "private_network", ip: "192.168.99.10"
-    subconfig.vm.provision "file", source: "./.hosts", destination: "~/flask-ansible-example"
-    subconfig.vm.provision "file", source: "./ansible.cfg", destination: "~/flask-ansible-example"
-    subconfig.vm.provision "file", source: "./deploy.yml", destination: "~/flask-ansible-example"
+    subconfig.vm.provision "file", source: "./.hosts", destination: "~/flask-ansible-example/.hosts"
+    subconfig.vm.provision "file", source: "./.nginx", destination: "~/flask-ansible-example/.nginx"
+    subconfig.vm.provision "file", source: "./.service", destination: "~/flask-ansible-example/.service"
+    subconfig.vm.provision "file", source: "./ansible.cfg", destination: "~/flask-ansible-example/ansible.cfg"
+    subconfig.vm.provision "file", source: "./deploy.yml", destination: "~/flask-ansible-example/deploy.yml"
     subconfig.vm.provision :shell, :inline => "sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config; sudo systemctl restart sshd;", run: "always"
    
     # Install utils on all machines  
