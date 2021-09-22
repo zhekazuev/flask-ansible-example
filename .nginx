@@ -1,10 +1,22 @@
 #test
 server {
     listen 80;
+    listen 443 ssl;
+    ssl_certificate      /home/vagrant/localhost.crt;
+    ssl_certificate_key  /home/vagrant/localhost.key;
+    ssl_ciphers          HIGH:!aNULL:!MD5;
     server_name flaskans.com www.flaskans.com;
 
     location / {
         include proxy_params;
         proxy_pass http://unix:/home/vagrant/flask-ansible-example/flask-ansible-example.sock;
     }
+}
+
+# redirect http to https here
+server {
+    listen                          80;
+    listen                          [::]:80;
+    server_name                     flaskans.com;
+    return                          301 https://$server_name$request_uri;
 }

@@ -39,6 +39,23 @@
       virtualenv: /home/{{ ansible_ssh_user }}/{{ app_name }}/env
       virtualenv_python: python3
 
+
+# Securing the Application
+- hosts: webservers
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: Install the package "python-certbot-nginx"
+    apt:
+      name: python3-certbot-nginx
+  - name: Run command openssl
+    command: openssl req -new -newkey rsa:4096 -days 3650 -nodes -x509 -subj "/C=PL/ST=Poland/L=Warsaw/O=flaskans/CN=flaskans.com" -keyout localhost.key -out localhost.crt
+  - name: Run command security
+    command: cp /home/vagrant/localhost.crt /usr/local/share/ca-certificates/localhost.crt
+  - name: Run command security
+    command: update-ca-certificates
+
+
 # Configure app systemd service and nginx
 - hosts: webservers
   become: yes
@@ -69,16 +86,3 @@
     ufw:
       rule: allow
       name: Nginx Full
-
-# Securing the Application
-- hosts: webservers
-  become: yes
-  become_method: sudo
-  tasks:
-  - name: Install the package "python-certbot-nginx"
-    apt:
-      name: python3-certbot-nginx
-  - name: Run command - certbot --nginx -d flaskans.com -d www.flaskans.com
-    command: certbot --nginx -d flaskans.com -d www.flaskans.com --non-interactive --agree-tos -m flaskans@example.com
-  - name: Run command - ufw delete allow 'Nginx HTTP'
-    command: ufw delete allow 'Nginx HTTP'
