@@ -81,7 +81,7 @@
   - name: Install the package "python-certbot-nginx"
     apt:
       name: python-certbot-nginx
-  - name: Run command - sudo certbot --nginx -d flaskans.com -d www.flaskans.com
-    ansible.builtin.command: sudo certbot --nginx -d flaskans.com -d www.flaskans.com --non-interactive --agree-tos -m flaskans@example.com
-  - name: Run command - sudo ufw delete allow 'Nginx HTTP'
-    ansible.builtin.command: sudo ufw delete allow 'Nginx HTTP'
+  - name: Run command - certbot --nginx -d flaskans.com -d www.flaskans.com
+    ansible.builtin.command: certbot --nginx -d flaskans.com -d www.flaskans.com --non-interactive --agree-tos -m flaskans@example.com
+  - name: Run command - ufw delete allow 'Nginx HTTP'
+    ansible.builtin.command: ufw delete allow 'Nginx HTTP'
