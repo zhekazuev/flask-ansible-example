@@ -1,6 +1,7 @@
 #test
 server {
     listen 80;
+    server_name flaskans.com www.flaskans.com;
 
     location / {
         include proxy_params;
