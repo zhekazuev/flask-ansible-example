@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn instance to serve flask-ansible-example
+After=network.target
+
+[Service]
+User=vagrant
+Group=www-data
+WorkingDirectory=/home/vagrant/flask-ansible-example
+Environment="PATH=/home/vagrant/flask-ansible-example/env/bin"
+ExecStart=/home/vagrant/flask-ansible-example/env/bin/gunicorn --workers 3 --bind unix:flask-ansible-example.sock -m 007 wsgi:app
+
+[Install]
+WantedBy=multi-user.target
