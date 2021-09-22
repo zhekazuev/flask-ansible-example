@@ -1,24 +1,27 @@
-# flask-ansible-example
+# Flask and Ansible+Vagrant
 
 This is an example Flask app, ready to be deployed with a simplified Ansible playbook.
 
 The included deploy playbook will:
+- Deploy VMs with Vagrant - master with playbooks and node1 - webserver
 - Install system apt packages
 - Clone the repo and install Python requirements in a virtualenv
 - Configure gunicorn, nginx, ufw and systemd
 - Enable and start services
-- Check the url for the expected response
 
-The `deploy.yml` playbook is modeled after the manual steps discussed in this [digitalocean article](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-16-04) using a Ubuntu [ML](https://www.digitalocean.com/community/tutorials/how-to-use-the-machine-learning-one-click-install-image-on-digitalocean) instance.
+The `deploy.yml` playbook is modeled after the manual steps discussed in this [digitalocean article](hhttps://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-gunicorn-and-nginx-on-ubuntu-18-04) using a Ubuntu [ML](https://www.digitalocean.com/community/tutorials/how-to-use-the-machine-learning-one-click-install-image-on-digitalocean) instance.
 
 ## Prerequisites
 
 You'll need [Ansible installed](https://docs.ansible.com/ansible/latest/intro_installation.html) and SSH access to any hosts. Customize the `.hosts` file as needed.
 ```
-pip install ansible
-git clone https://github.com/brennv/flask-ansible-example.git
+sudo apt update --yes
+sudo apt install software-properties-common
+sudo add-apt-repository --yes --update ppa:ansible/ansible
+sudo apt install ansible --yes
+git clone https://github.com/zhekazuev/flask-ansible-example.git
 cd flask-ansible-example
-nano .hosts
+vim .hosts
 ```
 
 ## Deploying the app
